@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameEnding : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameEnding : MonoBehaviour
     bool m_IsPlayerCaught;
     float m_Timer;
     bool m_HasAudioPlayed;
+    public TextMeshProUGUI distanceText;
     
     void OnTriggerEnter (Collider other)
     {
@@ -43,6 +45,9 @@ public class GameEnding : MonoBehaviour
 
     void EndLevel (CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
     {
+        
+        Destroy(distanceText);
+
         if (!m_HasAudioPlayed)
         {
             audioSource.Play();

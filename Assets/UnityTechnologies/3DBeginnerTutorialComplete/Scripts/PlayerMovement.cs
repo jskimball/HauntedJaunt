@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,12 +12,17 @@ public class PlayerMovement : MonoBehaviour
     AudioSource m_AudioSource;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
+    public TextMeshProUGUI distanceText;
+    Vector3 endPoint;
+    Vector3 distance;
 
     void Start ()
     {
         m_Animator = GetComponent<Animator> ();
         m_Rigidbody = GetComponent<Rigidbody> ();
         m_AudioSource = GetComponent<AudioSource> ();
+        setDistanceText();
+        endPoint = GameObject.FindGameObjectWithTag("endPoint").transform.position;
     }
 
     void FixedUpdate ()
@@ -46,11 +52,19 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
+
+        distance = m_Rigidbody.position - endPoint;
+        setDistanceText();
     }
 
     void OnAnimatorMove ()
     {
         m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
         m_Rigidbody.MoveRotation (m_Rotation);
+    }
+
+    void setDistanceText()
+    {
+        distanceText.text = "Distance to End: " + Mathf.RoundToInt(distance.magnitude) + "m";
     }
 }
