@@ -2002,8 +2002,8 @@ GameObject:
   - component: {fileID: 2118738527}
   - component: {fileID: 2118738526}
   m_Layer: 5
-  m_Name: DistanceText
-  m_TagString: Untagged
+  m_Name: distanceText
+  m_TagString: distanceText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2394,6 +2394,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
+        type: 3}
+      propertyPath: distanceText
+      value: 
+      objectReference: {fileID: 2118738526}
     - target: {fileID: 2008973354732098957, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
       propertyPath: m_RootOrder
@@ -2798,6 +2803,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1382306290451288063, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
+      propertyPath: m_TagString
+      value: endPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382306290451288063, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -2816,6 +2826,11 @@ PrefabInstance:
       propertyPath: caughtAudio
       value: 
       objectReference: {fileID: 1413067897}
+    - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
+        type: 3}
+      propertyPath: distanceText
+      value: 
+      objectReference: {fileID: 2118738526}
     - target: {fileID: 5642716984738007026, guid: 3d8158841df6b824eb4a665f82a99938,
         type: 3}
       propertyPath: faderCanvasGroup
