@@ -6,6 +6,7 @@ TagManager:
   tags:
   - distanceText
   - endPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX
