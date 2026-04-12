@@ -13,4 +13,6 @@ To Be Implemented
 ## Particle Effect Implementation
 To Be Implemented
 ## Sound Effect Implementation
-To Be Implemented
+#### Implemented by Jasmine Kimball
+
+I added a dynamic heartbeat sound effect that plays in the background of the game. The heartbeat sound increases in pitch the nearer you are to an enemy, and will return to a baseline pitch upon gaining distance from the nearest enemy. The sound is terminated upon the game ending, and will restart if the game restarts itself.
