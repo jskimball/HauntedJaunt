@@ -9,20 +9,22 @@ public class PlayerMovement : MonoBehaviour
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
-    AudioSource m_AudioSource;
+    public AudioSource Footsteps;
+    public AudioSource Heartbeat;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
     public TextMeshProUGUI distanceText;
+    public GameEnding gameEnding;
     Vector3 endPoint;
-    Vector3 distance;
 
     void Start ()
     {
         m_Animator = GetComponent<Animator> ();
         m_Rigidbody = GetComponent<Rigidbody> ();
-        m_AudioSource = GetComponent<AudioSource> ();
-        setDistanceText();
         endPoint = GameObject.FindGameObjectWithTag("endPoint").transform.position;
+        Footsteps.loop = true;
+        Heartbeat.loop = true;
+        Heartbeat.Play();
     }
 
     void FixedUpdate ()
@@ -40,21 +42,21 @@ public class PlayerMovement : MonoBehaviour
         
         if (isWalking)
         {
-            if (!m_AudioSource.isPlaying)
+            if (!Footsteps.isPlaying)
             {
-                m_AudioSource.Play();
+                Footsteps.Play();
             }
         }
         else
         {
-            m_AudioSource.Stop ();
+            Footsteps.Stop ();
         }
 
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
 
-        distance = m_Rigidbody.position - endPoint;
-        setDistanceText();
+        SetDistanceText(FindDistance(m_Rigidbody.position, endPoint));
+        SetPulse();
     }
 
     void OnAnimatorMove ()
@@ -63,8 +65,56 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MoveRotation (m_Rotation);
     }
 
-    void setDistanceText()
+    void SetDistanceText(float distanceToEnd)
     {
-        distanceText.text = "Distance to End: " + Mathf.RoundToInt(distance.magnitude) + "m";
+        distanceText.text = "Distance to End: " + Mathf.RoundToInt(distanceToEnd) + "m";
+    }
+
+    float FindDistance(Vector3 pos1, Vector3 pos2)
+    {
+        return (pos1 - pos2).magnitude;
+    }
+
+    GameObject findNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject nearestEnemy = null;
+        float smallestDistance = Mathf.Infinity;
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = FindDistance(enemy.transform.position, m_Rigidbody.position);
+            if (distance < smallestDistance) {
+                smallestDistance = distance;
+                nearestEnemy = enemy;
+            }
+        }
+
+        return nearestEnemy;
+    }
+
+    void SetPulse()
+    {
+        GameObject nearestEnemy = findNearestEnemy();
+        float distanceToEnemy = FindDistance(nearestEnemy.transform.position, m_Rigidbody.position);
+
+        if (distanceToEnemy < 3f)
+        {
+            Heartbeat.pitch = 2f;
+        } 
+        
+        else if (distanceToEnemy < 4f)
+        {
+            Heartbeat.pitch = 1.7f;
+        }
+        
+        else if (distanceToEnemy < 5f)
+        {
+            Heartbeat.pitch = 1.4f;
+        }
+
+        else
+        {
+            Heartbeat.pitch = 1f;
+        }
     }
 }

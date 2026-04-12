@@ -11,6 +11,7 @@ public class GameEnding : MonoBehaviour
     public AudioSource exitAudio;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
+    public PlayerMovement playerMovement;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
@@ -45,8 +46,9 @@ public class GameEnding : MonoBehaviour
 
     void EndLevel (CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
     {
-        
+        playerMovement = player.GetComponent<PlayerMovement>();
         Destroy(distanceText);
+        playerMovement.Heartbeat.Stop();
 
         if (!m_HasAudioPlayed)
         {
