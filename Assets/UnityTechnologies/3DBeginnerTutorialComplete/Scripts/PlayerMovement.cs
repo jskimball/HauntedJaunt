@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     public GameEnding gameEnding;
     Vector3 endPoint;
 
+    //variables for distance text lerp
+    public float maxDistance = 40f;
+    public Color farColor = Color.white;
+    public Color closeColor = Color.red;
+
     void Start ()
     {
         m_Animator = GetComponent<Animator> ();
@@ -68,6 +73,10 @@ public class PlayerMovement : MonoBehaviour
     void SetDistanceText(float distanceToEnd)
     {
         distanceText.text = "Distance to End: " + Mathf.RoundToInt(distanceToEnd) + "m";
+
+        //lerp the color of the text based on distance to end point
+        float t = Mathf.InverseLerp(maxDistance, 0f, distanceToEnd);
+        distanceText.color = Color.Lerp(farColor, closeColor, t);
     }
 
     float FindDistance(Vector3 pos1, Vector3 pos2)
