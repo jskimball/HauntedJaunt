@@ -11,9 +11,7 @@ public class FootstepTrail : MonoBehaviour
     {
         bool moving = _animator.GetBool("IsWalking");
 
-        if (moving && !ps.isPlaying) ps.Play();
-        if (!moving && ps.isPlaying) ps.Stop();
-
-        Debug.Log("isPlaying: " + ps.isPlaying + " | particles: " + ps.particleCount);
+        if (moving && !ps.isEmitting) ps.Play();
+        if (!moving && ps.isEmitting) ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 }
